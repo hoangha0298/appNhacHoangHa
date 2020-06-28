@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.MainActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/myViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/playmini"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/llminiinfomationplay"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivsongmini"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/tvsongmini"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:textSize="16sp"
+                android:text="Bài hát">
+            </TextView>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imgbuttonplaymini"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/iconpause" />
+        <ImageButton
+            android:src="@drawable/iconnext"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/imgbuttonnextmini"
+            android:layout_marginRight="15dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        app:tabTextAppearance="@style/MineCustomTabText"
+        android:id="@+id/myTabLayout"
+        app:tabIndicatorColor="#a845de"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#a845de"
+        app:tabTextColor="#000000"
+        app:tabIndicatorHeight="2dp"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+
+</LinearLayout>
