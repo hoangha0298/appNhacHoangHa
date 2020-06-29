@@ -84,15 +84,18 @@ public class PlayNhacActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (musicSrv.isStatusDownload()) {
-                    if (musicSrv.isPlaying()) imgplay.setImageResource(R.drawable.iconpause);
+                    if (musicSrv.isPlaying()) {
+                        imgplay.setImageResource(R.drawable.iconpause);
+                        fragment_dia_nhac.objectAnimator.resume();
+                    }
                     else {
                         imgplay.setImageResource(R.drawable.iconplay);
                         fragment_dia_nhac.objectAnimator.pause();
                     }
                     if (musicSrv.isRepeat()) imgrepeat.setImageResource(R.drawable.iconsyned);
                     else imgrepeat.setImageResource(R.drawable.iconrepeat);
-                    if (musicSrv.isRandom()) imgpre.setImageResource(R.drawable.iconshuffled);
-                    else imgnext.setImageResource(R.drawable.iconsuffle);
+                    if (musicSrv.isRandom()) imgrandom.setImageResource(R.drawable.iconshuffled);
+                    else imgrandom.setImageResource(R.drawable.iconsuffle);
                     handler1.removeCallbacks(this);
                 }
                 else handler1.postDelayed(this, 100);
@@ -108,12 +111,12 @@ public class PlayNhacActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mangbaihat.size() > 0 && musicSrv.isStatusDownload()){
-
-                    if (musicSrv.getIndexSong()!=indexSong) {           // update khi chuyen bai
+                    int duration = musicSrv.getDuration();
+                    if (musicSrv.getIndexSong()!=indexSong || duration == 0) {           // update khi chuyen bai
                         indexSong = musicSrv.getIndexSong();
+                        updateFirst();
                         fragment_dia_nhac.PlayNhac(mangbaihat.get(indexSong).getHinhBaiHat());
                         getSupportActionBar().setTitle(mangbaihat.get(indexSong).getTenBaiHat());
-                        int duration = musicSrv.getDuration();
                         System.out.println("duration: " + duration);
                         txtTotaltimesong.setText(simpleDateFormat.format(duration));
                         sktime.setMax(duration);
@@ -199,7 +202,6 @@ public class PlayNhacActivity extends AppCompatActivity {
         viewPager.setAdapter(adapterNhac);
         fragment_dia_nhac = (Fragment_Dia_Nhac) adapterNhac.getItem(0);
 
-        imgplay.setImageResource(R.drawable.iconpause);
     }
 
 
@@ -223,39 +225,33 @@ public class PlayNhacActivity extends AppCompatActivity {
                 }
             }
         });
-//
-//        imgrepeat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (musicSrv.isRepeat() == true){
-//                    musicSrv.setRepeat(false);
-//                    imgrepeat.setImageResource(R.drawable.iconrepeat);
-//
-//                    // kéo theo
-////                    musicSrv.setRandom(false);
-////                    imgrandom.setImageResource(R.drawable.iconsuffle);
-//
-//                }else{
-//                    musicSrv.setRepeat(true);
-//                    imgrepeat.setImageResource(R.drawable.iconsyned);
-//                }
-//            }
-//        });
-//
-//        imgrandom.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (musicSrv.isRandom() == false){
-//                    musicSrv.setRandom(true);
-//                    imgrandom.setImageResource(R.drawable.iconshuffled);
-//
-//                }else{
-//                    imgrandom.setImageResource(R.drawable.iconsuffle);
-//                    musicSrv.setRandom(false);
-//
-//                }
-//            }
-//        });
+
+        imgrepeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (musicSrv.isRepeat() == true){
+                    musicSrv.setRepeat(false);
+                    imgrepeat.setImageResource(R.drawable.iconrepeat);
+
+                }else{
+                    musicSrv.setRepeat(true);
+                    imgrepeat.setImageResource(R.drawable.iconsyned);
+                }
+            }
+        });
+
+        imgrandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (musicSrv.isRandom() == true){
+                    imgrandom.setImageResource(R.drawable.iconsuffle);
+                    musicSrv.setRandom(false);
+                }else{
+                    musicSrv.setRandom(true);
+                    imgrandom.setImageResource(R.drawable.iconshuffled);
+                }
+            }
+        });
 //
 //        sktime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 //            @Override
@@ -273,25 +269,20 @@ public class PlayNhacActivity extends AppCompatActivity {
 //                musicSrv.seekTo(seekBar.getProgress());
 //            }
 //        });
-//
-//        imgnext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (musicSrv.isPlaying() || musicSrv != null){
-//                    musicSrv.nextSong();
-//                }
-//
-//            }
-//        });
-//
-//        imgpre.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (musicSrv.isPlaying() || musicSrv != null){
-//                    musicSrv.stop();
-//                }
-//            }
-//        });
+
+        imgnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    musicSrv.nextSong();
+            }
+        });
+
+        imgpre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    musicSrv.backSong();
+            }
+        });
 
     }
 
