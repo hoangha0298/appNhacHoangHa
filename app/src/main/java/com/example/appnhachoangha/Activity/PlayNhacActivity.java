@@ -111,17 +111,16 @@ public class PlayNhacActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mangbaihat.size() > 0 && musicSrv.isStatusDownload()){
-                    int duration = musicSrv.getDuration();
+                    int duration = 0;
                     if (musicSrv.getIndexSong()!=indexSong || duration == 0) {           // update khi chuyen bai
                         indexSong = musicSrv.getIndexSong();
                         updateFirst();
+                        duration = musicSrv.getDuration();
                         fragment_dia_nhac.PlayNhac(mangbaihat.get(indexSong).getHinhBaiHat());
                         getSupportActionBar().setTitle(mangbaihat.get(indexSong).getTenBaiHat());
-                        System.out.println("duration: " + duration);
                         txtTotaltimesong.setText(simpleDateFormat.format(duration));
                         sktime.setMax(duration);
                     }
-
                     sktime.setProgress(musicSrv.getCurrentPosition());
                     txtTimesong.setText(simpleDateFormat.format(musicSrv.getCurrentPosition()));
                 }
