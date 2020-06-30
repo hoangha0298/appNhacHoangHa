@@ -45,12 +45,21 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/imgbuttonplaymini"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="5dp"
+            android:id="@+id/imgbuttonlovemini"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/iconlove" />
+
+        <ImageButton
+            android:id="@+id/imgbuttonplaymini"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/iconpause" />
@@ -58,12 +67,11 @@
             android:src="@drawable/iconnext"
             android:scaleType="fitXY"
             android:background="@null"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_gravity="center_vertical"
             android:id="@+id/imgbuttonnextmini"
             android:layout_marginRight="15dp"
-            android:layout_width="45dp"
-            android:layout_height="45dp"/>
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
 
     </LinearLayout>
 

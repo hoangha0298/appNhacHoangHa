@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     ImageView ivsongmini;
     TextView tvsongmini;
-    ImageButton imgbuttonplaymini, imgbuttonnextmini;
+    ImageButton imgbuttonplaymini, imgbuttonnextmini, imgbuttonlovemini;
     LinearLayout llplaymini, llminiinfomationplay;
 
     MusicService musicSrv;
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         tvsongmini = findViewById(R.id.tvsongmini);
         imgbuttonnextmini = findViewById(R.id.imgbuttonnextmini);
         imgbuttonplaymini = findViewById(R.id.imgbuttonplaymini);
+        imgbuttonlovemini = findViewById(R.id.imgbuttonlovemini);
         llplaymini = findViewById(R.id.playmini);
         llminiinfomationplay = findViewById(R.id.llminiinfomationplay);
     }
@@ -155,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 musicSrv.nextSong();
+            }
+        });
+
+        imgbuttonlovemini.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgbuttonlovemini.setImageResource(R.drawable.iconloved);
             }
         });
     }

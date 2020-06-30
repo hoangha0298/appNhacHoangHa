@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ViewPagerPlayListNhac extends FragmentPagerAdapter {
     public final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
+
     public ViewPagerPlayListNhac(@NonNull FragmentManager fm) {
         super(fm);
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuplaylove"
+        android:icon="@drawable/iconlove"
+        android:title="love"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuplayplus"
+        android:checkable="false"
+        android:icon="@android:drawable/ic_lock_silent_mode"
+        android:title="Menu xyz"
+        app:showAsAction="collapseActionView" />
+</menu>

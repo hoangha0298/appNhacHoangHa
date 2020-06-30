@@ -5,18 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -78,7 +84,7 @@ public class PlayNhacActivity extends AppCompatActivity {
         }
     };
 
-    private void updateFirst() {
+    private void updateFirst() {        // khi bat dau connect
         final Handler handler1 = new Handler();
         Runnable work1 = new Runnable() {
             @Override
@@ -92,8 +98,9 @@ public class PlayNhacActivity extends AppCompatActivity {
                         imgplay.setImageResource(R.drawable.iconplay);
                         fragment_dia_nhac.objectAnimator.pause();
                     }
-                    if (musicSrv.isRepeat()) imgrepeat.setImageResource(R.drawable.iconsyned);
-                    else imgrepeat.setImageResource(R.drawable.iconrepeat);
+                    if (musicSrv.getRepeat() == 0) imgrepeat.setImageResource(R.drawable.iconrepeat);
+                    else if(musicSrv.getRepeat() == 1) imgrepeat.setImageResource(R.drawable.iconrepeatone);
+                    else imgrepeat.setImageResource(R.drawable.iconsyned);
                     if (musicSrv.isRandom()) imgrandom.setImageResource(R.drawable.iconshuffled);
                     else imgrandom.setImageResource(R.drawable.iconsuffle);
                     handler1.removeCallbacks(this);
@@ -183,6 +190,7 @@ public class PlayNhacActivity extends AppCompatActivity {
         imgrandom = findViewById(R.id.imgbuttonsuffle);
         imgpre = findViewById(R.id.imgbuttonpreview);
         viewPager = findViewById(R.id.viewpagerplaynhac);
+
         setSupportActionBar(toolbarplaynhac);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarplaynhac.setNavigationOnClickListener(new View.OnClickListener() {
@@ -191,8 +199,8 @@ public class PlayNhacActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         toolbarplaynhac.setTitleTextColor(Color.WHITE);
+
         fragment_dia_nhac = new Fragment_Dia_Nhac();
         fragment_play_all_bai_hat = new Fragment_Play_All_Bai_Hat();
         adapterNhac = new ViewPagerPlayListNhac(getSupportFragmentManager());
@@ -201,6 +209,33 @@ public class PlayNhacActivity extends AppCompatActivity {
         viewPager.setAdapter(adapterNhac);
         fragment_dia_nhac = (Fragment_Dia_Nhac) adapterNhac.getItem(0);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.play_nhac_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menuplaylove:
+                MenuView.ItemView love = findViewById(R.id.menuplaylove);
+                love.setIcon(ContextCompat.getDrawable(this, R.drawable.iconloved));
+                break;
+            case R.id.menuplayplus:
+                //code xử lý khi bấm menu2
+                break;
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -228,14 +263,12 @@ public class PlayNhacActivity extends AppCompatActivity {
         imgrepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (musicSrv.isRepeat() == true){
-                    musicSrv.setRepeat(false);
-                    imgrepeat.setImageResource(R.drawable.iconrepeat);
+                if (musicSrv.getRepeat() < 2) musicSrv.setRepeat(musicSrv.getRepeat() + 1);
+                else musicSrv.setRepeat(0);
 
-                }else{
-                    musicSrv.setRepeat(true);
-                    imgrepeat.setImageResource(R.drawable.iconsyned);
-                }
+                if (musicSrv.getRepeat() == 0) imgrepeat.setImageResource(R.drawable.iconrepeat);
+                else if(musicSrv.getRepeat() == 1) imgrepeat.setImageResource(R.drawable.iconrepeatone);
+                else imgrepeat.setImageResource(R.drawable.iconsyned);
             }
         });
 
@@ -251,23 +284,23 @@ public class PlayNhacActivity extends AppCompatActivity {
                 }
             }
         });
-//
-//        sktime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//                musicSrv.seekTo(seekBar.getProgress());
-//            }
-//        });
+
+        sktime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                musicSrv.seekTo(seekBar.getProgress());
+            }
+        });
 
         imgnext.setOnClickListener(new View.OnClickListener() {
             @Override

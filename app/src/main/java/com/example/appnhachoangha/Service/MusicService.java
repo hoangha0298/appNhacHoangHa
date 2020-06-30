@@ -23,9 +23,8 @@ public class MusicService extends Service implements
     private ArrayList<BaiHat> baiHats;
     int indexSong = 0;
 
-    boolean repeat = false;
+    int repeat = 0;
     boolean random = false;
-    boolean next = true;
 
     // trạng thái tải nhạc xong chưa
     boolean statusDownload = false;
@@ -73,20 +72,6 @@ public class MusicService extends Service implements
 
     // các phương thức cho phát nhạc
 
-//    public void playSong(int indexSong) {
-//        player.reset();
-//        this.indexSong = indexSong;
-//        BaiHat baiHat = baiHats.get(indexSong);
-//        try{
-//            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//            player.setDataSource(baiHat.getLinkBaiHat());
-//        }
-//        catch(Exception e){
-//            Toast.makeText(getBaseContext(), "Error setting data source", Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        }
-//        player.prepareAsync();
-//    }
 
         public void playSong(int indexSong){
         player.reset();
@@ -157,11 +142,11 @@ public class MusicService extends Service implements
         return indexSong;
     }
 
-    public boolean isRepeat() {
+    public int getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(boolean repeat) {
+    public void setRepeat(int repeat) {
         this.repeat = repeat;
     }
 
@@ -173,54 +158,24 @@ public class MusicService extends Service implements
         this.random = random;
     }
 
-    public boolean isNext() {
-        return next;
-    }
-
-    public void setNext(boolean next) {
-        this.next = next;
-    }
-
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        Toast.makeText(getApplicationContext(), "completion", Toast.LENGTH_LONG);
-//        if (next == true) {
-//            indexSong++;
-//
-//            if (!random) {
-//                if (!repeat) {
-//                    if(indexSong == baiHats.size()) {
-//                        indexSong--;
-//                        player.pause();
-//                    } else {
-//                        sleepAndPlay();
-//                    }
-//                }
-//                else {
-//                    if(indexSong == baiHats.size()) indexSong = 0;
-//                    sleepAndPlay();
-//                }
-//            }
-//
-//            else {
-//                Random random = new Random();
-//                int index =indexSong;
-//                while (index == indexSong){
-//                    index = random.nextInt(baiHats.size());
-//                }
-//                indexSong = index;
-//            }
-//
-//        }
-//
-//        else {                        // không next
-//            if (repeat == true) {
-//                sleepAndPlay();
-//            }
-//            else
-//                player.pause();
-//        }
+        if (player.getCurrentPosition() > 100) {
+            if (repeat == 0) { // dừng bài hát
+            }
+            else if (repeat == 1) {
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                player.start();
+            }
+            else {
+                nextSong();
+            }
+        }
 
     }
 
@@ -233,6 +188,6 @@ public class MusicService extends Service implements
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
         statusDownload = true;
-        Toast.makeText(getApplicationContext(), "download complete", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "download complete", Toast.LENGTH_SHORT).show();
     }
 }

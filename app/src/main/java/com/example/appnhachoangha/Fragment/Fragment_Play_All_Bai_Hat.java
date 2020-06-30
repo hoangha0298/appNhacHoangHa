@@ -1,6 +1,7 @@
 package com.example.appnhachoangha.Fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +25,23 @@ public class Fragment_Play_All_Bai_Hat extends Fragment {
     View view;
     RecyclerView recyclerViewplaynhac;
     PlayNhacAdapter playNhacAdapter;
+
+    ArrayList<BaiHat> baiHats;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_all_bai_hat,container,false);
         recyclerViewplaynhac = view.findViewById(R.id.recycleviewPlayAll);
-        ArrayList<BaiHat> baiHats = PlayNhacActivity.mangbaihat;
 
-        if (baiHats.size() > 0 ) {
-            playNhacAdapter = new PlayNhacAdapter(getActivity(), baiHats);
-            recyclerViewplaynhac.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerViewplaynhac.setAdapter(playNhacAdapter);
-        }
+        baiHats = PlayNhacActivity.mangbaihat;
+        if (baiHats == null) baiHats = new ArrayList<>();
+        playNhacAdapter = new PlayNhacAdapter(getActivity(), baiHats);
+        recyclerViewplaynhac.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewplaynhac.setAdapter(playNhacAdapter);
+
         return view;
 
     }
+
 }

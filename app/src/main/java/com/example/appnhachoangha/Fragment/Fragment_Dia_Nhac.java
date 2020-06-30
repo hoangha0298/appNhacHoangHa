@@ -42,17 +42,5 @@ public class Fragment_Dia_Nhac extends Fragment {
     public void PlayNhac(String hinhanh) {
         Picasso.with(getActivity()).load(hinhanh).into(circleImageView);
     }
-//    public void Pause(String hinhanh){
-//        objectAnimator.setRepeatMode(ValueAnimator);
-//    }
-//    public void PlayNhac(final String hinhanh) {
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Picasso.with(getContext()).load(hinhanh).into(circleImageView);
-//            }
-//        }, 300);
-//
-//    }
+
 }
